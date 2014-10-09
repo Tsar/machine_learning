@@ -1,0 +1,3 @@
+[submodule "practice_2/perceptron/ml-2012"]
+	path = practice_2/perceptron/ml-2012
+	url = git@github.com:anton-bannykh/ml-2012.git
