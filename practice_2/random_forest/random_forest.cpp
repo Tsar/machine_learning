@@ -3,6 +3,7 @@
 #include <cassert>
 #include <vector>
 #include <string>
+#include <set>
 
 #define TREES_COUNT           11
 #define RANDOM_INDEXES_COUNT  100
@@ -138,7 +139,7 @@ public:
             delete right;
     }
 
-    int classify(std::vector const& test) {
+    int classify(std::vector<int> const& test) {
         if (leaf)
             return fMult;
 
@@ -188,14 +189,14 @@ int main() {
             int res = trees[i]->classify(testData[test]);
             if (res == -1) {
                 ++treesVotedMinusOne;
-            } else (res == 1) {
+            } else if (res == 1) {
                 ++treesVotedPlusOne;
             } else {
                 assert(false);
             }
         }
 
-        finalRes = (treesVotedMinusOne > treesVotedPlusOne) ? -1 : 1;
+        int finalRes = (treesVotedMinusOne > treesVotedPlusOne) ? -1 : 1;
         if (testLabels[test] == finalRes) {
             ++correct;
         }
