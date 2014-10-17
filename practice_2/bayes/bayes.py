@@ -62,8 +62,12 @@ if __name__ == "__main__":
         countAll += 1
         logSum = 0.0
         for w in subject + message:
-            if (not w in weight.keys()) or (weight[w] <= 0.0000001) or (weight[w] >= 0.9999999):
+            if not w in weight.keys():
                 continue
+            if weight[w] <= 0.0000001:
+                weight[w] = 0.0000001
+            if weight[w] >= 0.9999999:
+                weight[w] = 0.9999999
             logSum += (math.log(1.0 - weight[w]) - math.log(weight[w]))
 
         if logSum > 700:
