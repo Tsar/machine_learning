@@ -163,6 +163,8 @@ private:
 int main() {
     srand(time(0));
 
+    printf("Training...\n");
+
     readData("arcene_train.data", trainData);
     readLabels("arcene_train.labels", trainLabels);
 
@@ -175,6 +177,8 @@ int main() {
     for (int i = 0; i < TREES_COUNT; ++i) {
         trees.push_back(new Tree(sampleIndexes));
     }
+
+    printf("Testing...\n");
 
     std::vector<int> testData[100];
     int testLabels[100];
