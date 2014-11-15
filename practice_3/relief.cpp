@@ -68,6 +68,7 @@ void writeSelectedFeatures(std::string const& origFileName, std::string const& f
     readData(origFileName, d);
 
     FILE* fd = fopen(fsFileName.c_str(), "w");
+    fprintf(fd, "%zu\n", selected.size());
     for (int i = 0; i < 100; ++i) {
         for (int j = 0; j < selected.size(); ++j) {
             int f = selected[j];
@@ -78,7 +79,7 @@ void writeSelectedFeatures(std::string const& origFileName, std::string const& f
     fclose(fd);
 }
 
-int main() {
+int main(int argc, char* argv[]) {
     srand(time(0));
 
     readData("../practice_2/random_forest/arcene_train.data", data);
@@ -117,17 +118,15 @@ int main() {
         w[f] /= m;
     }
 
-    double threshold = 0.01;
+    double threshold = (argc == 2) ? atof(argv[1]) : 0.0001;
 
-    int fCount = 0;
     for (int f = 0; f < 10000; ++f) {
         if (w[f] >= threshold) {
             selected.push_back(f);
-            ++fCount;
         }
     }
 
-    printf("Selected features count = %d\n", fCount);
+    printf("Selected features count = %zu\n", selected.size());
 
     writeSelectedFeatures("../practice_2/random_forest/arcene_train.data", "arcene_train_FS.data");
     writeSelectedFeatures("../practice_2/random_forest/arcene_valid.data", "arcene_valid_FS.data");
