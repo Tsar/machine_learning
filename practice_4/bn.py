@@ -11,6 +11,8 @@ if __name__ == "__main__":
         # TODO
         i += 1
 
+    g = {}  # graph
+
     while i < len(lines):
         i += 1
         first = True
@@ -19,11 +21,25 @@ if __name__ == "__main__":
                 first = False
                 vv = lines[i].replace(":", " : ").split()  # [vertex, ':', vertex, vertex, ...]
                 assert((len(vv) >= 2) and (vv[1] == ':'))
+                u = int(vv[0])
+                g[u] = []
                 for j in range(2, len(vv)):
-                    print("Edge (%d, %d)" % (int(vv[0]), int(vv[j])))
-                    # TODO: add edge
+                    v = int(vv[j])
+                    print("Edge (%d, %d)" % (u, v))
+                    g[u].append(v)
             else:
                 cp = lines[i].replace(":", " : ").split()  # [(not?) vertex, (not?) vertex, ..., ':', probability]
                 assert((len(cp) >= 3) and (cp[-2] == ':'))
                 # TODO
             i += 1
+
+    print(g)
+
+    with open("bayesian_network.dot", "w") as f:
+        f.write("digraph bn {\n")
+        for u in g:
+            f.write("    V%d [label=%s]\n" % (u, str(u)))
+        for u in g:
+            for v in g[u]:
+                f.write("    V%d -> V%d\n" % (u, v))
+        f.write("}\n")
